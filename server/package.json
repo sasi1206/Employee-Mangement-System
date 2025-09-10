@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "backend",
+    "server",
+    "node",
+    "express"
+  ],
+  "license": "ISC",
+  "author": "Sasi dharan KM",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.1.0",
+    "multer": "^2.0.1",
+    "mysql2": "^3.14.4",
+    "nodemon": "^3.1.10",
+    "sequelize": "^6.37.7"
+  }
+}
