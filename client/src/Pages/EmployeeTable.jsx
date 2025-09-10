@@ -9,7 +9,7 @@ const EmployeeTable = ()=>{
     const navigate = useNavigate();
     const [showDelete,setShowDelete] = useState(false);
     const [employees,setEmployees] = useState([]);
-
+    const [search,setSearch] = useState('');
     useEffect(()=>{
         GetUsers();
     },[]);
@@ -51,6 +51,13 @@ const EmployeeTable = ()=>{
         }
     }
 
+    const SearchResults = employees.length > 0 && search.length > 0 ? employees.filter(emp=>{
+        const name = emp.name.toLowerCase().includes(search.toLowerCase());
+        const department = emp.department.toLowerCase().includes(search.toLowerCase());
+        const designation = emp.designation.toLowerCase().includes(search.toLowerCase());
+        return name || department || designation;
+    }) : employees;
+
     return(
         <section className='p-4 pt-8 w-[80%] relative'>
             <section id="header" className='flex w-full justify-between items-center'>
@@ -59,7 +66,9 @@ const EmployeeTable = ()=>{
                     <section id="search" className='border-1 border-gray-300 rounded-xl flex p-2 items-center gap-2 w-[50%] pl-4'>
                         <IoSearchOutline fontSize={20} color='gray'/>
                         <input type="text" name="search" className='w-full outline-0'
-                        placeholder='Search'/>
+                        placeholder='Name or dest or dep' value={search} onChange={(e)=>{
+                            setSearch(e.target.value);
+                        }}/>
                     </section>
                     <button id="addEmp" className='border-1 border-blue-600 bg-blue-600 rounded-xl flex p-2.5 items-center gap-2 w-[42%] pl-4 cursor-pointer'
                         onClick={()=>{
@@ -81,13 +90,13 @@ const EmployeeTable = ()=>{
                         }
                     </section>
                     <hr className='border border-gray-300'></hr>
-                    <section id="employees" className={`${employees.length === 0 ? "grid place-content-center h-full font-semibold" : "pt-4 flex flex-col gap-2"}`}>
+                    <section id="employees" className={`${SearchResults.length === 0 ? "grid place-content-center h-25 font-semibold" : "pt-4 flex flex-col gap-2"}`}>
                         {
-                            employees.length === 0 
+                            SearchResults.length === 0 
                             ?
                              <p>No records found</p>
                             :
-                             employees.map(employee=>(
+                             SearchResults.map(employee=>(
                                 <div className='flex text-[13px] font-[350] pb-1 items-center'>
                                     <span className='flex items-center gap-1 w-2/11'>
                                         <img src={employee.employeePic} alt="user pfp" className="w-6 h-6 rounded-full object-cover"/>
